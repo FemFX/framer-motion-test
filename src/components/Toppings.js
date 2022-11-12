@@ -1,0 +1,60 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+const containerVariants = {
+  hidden: {
+    x: "100vw",
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      delay: 0.3,
+    },
+  },
+};
+const Toppings = ({ addTopping, pizza }) => {
+  let toppings = [
+    "mushrooms",
+    "peppers",
+    "onions",
+    "olives",
+    "extra cheese",
+    "tomatoes",
+  ];
+
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="toppings container"
+    >
+      <h3>Step 2: Choose Toppings</h3>
+      <ul>
+        {toppings.map((topping) => {
+          let spanClass = pizza.toppings.includes(topping) ? "active" : "";
+          return (
+            <motion.li
+              whileHover={{ scale: 1.1, color: "#f8e112" }}
+              transition={{ type: "spring", stiffness: 300 }}
+              key={topping}
+              onClick={() => addTopping(topping)}
+            >
+              <span className={spanClass}>{topping}</span>
+            </motion.li>
+          );
+        })}
+      </ul>
+
+      <Link to="/order">
+        <motion.button whileHover={{ scale: 1.1 }}>Order</motion.button>
+      </Link>
+    </motion.div>
+  );
+};
+
+export default Toppings;
